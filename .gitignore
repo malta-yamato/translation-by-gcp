@@ -1,0 +1,6 @@
+.idea/
+venv/
+translation_gcp/data/
+**/__pycache__/
+*.pyc
+*.po
