@@ -118,7 +118,7 @@ class GoogleTranslation:
                     w.writerow([key, res[key]])
             else:
                 for key in res:
-                    w.writerow([key, dic[res[key]]])
+                    w.writerow([key, res[key], dic[res[key]]])
 
 
 class XmlTranslation:

@@ -35,7 +35,9 @@ def main():
             # translate items
             xml_trans.translate(target)
             # new xml file
-            parent = Path(output_dir, 'values-' + target)
+            spl = target.split('-')
+            parent = Path(output_dir, 'values-' + spl[0] + '-r' + spl[1]) if len(spl) == 2 \
+                else Path(output_dir, 'values-' + target)
             if not parent.exists():
                 parent.mkdir(parents=True)
             file = Path(parent, xml_name)
