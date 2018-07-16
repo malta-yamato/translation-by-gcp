@@ -9,12 +9,13 @@ from google.cloud import translate
 
 class GoogleTranslation:
 
-    def __init__(self, base='Python is the No1.', target_language='en', list_unit=100, limit_req=100,
+    def __init__(self, base='Python is the No1.', target_language='en', list_unit=100, limit_req=10000,
                  limit_chars=1000000, unit_price=20 / 1000000):
         self.client = translate.Client()
         self.base = base
         self.target_language = target_language
         self.result = None
+        self.__disable = False
         self.__list_unit = list_unit
         self.__limit_req = limit_req
         self.__limit_chars = limit_chars
@@ -74,6 +75,8 @@ class GoogleTranslation:
             return {}
 
     def __check_req(self, arg):
+        if self.__disable:
+            return False
 
         # check count of chars
         arg_chars = 0
@@ -87,17 +90,21 @@ class GoogleTranslation:
         if self.__cnt_chars + arg_chars <= self.__limit_chars:
             self.__cnt_chars += arg_chars
         else:
-            print('reached the limit of the number of characters.')
+            print('!!! --- reached the limit of the number of characters. please check the limit values. ')
+            print('limit_req = {}, limit_chars = {}'.format(self.__limit_req, self.__limit_chars))
+            self.__disable = True
             return False
 
         # check count of request
         if self.__cnt_req < self.__limit_req:
             self.__cnt_req = self.__cnt_req + 1
-            print('requesting translation API ({}, {}) at {}'.format(self.__cnt_req, self.__cnt_chars,
-                                                                     datetime.now().strftime("%Y/%m/%d %H:%M:%S")))
+            print('requesting translation API ({} req, {} chars) at {}'
+                  .format(self.__cnt_req, self.__cnt_chars, datetime.now().strftime("%Y/%m/%d %H:%M:%S")))
             return True
         else:
-            print('reached the limit of the number of requests.')
+            print('!!! --- reached the limit of the number of characters. please check the limit values. ')
+            print('limit_req = {}, limit_chars = {}'.format(self.__limit_req, self.__limit_chars))
+            self.__disable = True
             return False
 
     def estimate(self, unit_price=None):
@@ -167,6 +174,8 @@ class XmlTranslation:
             text = elm.text
             if text is None:
                 continue
+            if text not in translated:
+                continue
             tr = translated[text]
             if tr is not None:
                 elm.text = tr
@@ -208,7 +217,9 @@ class TextTranslation:
         client.target_language = target_language
         self.__translated = []
         for line in self.__lines:
-            self.__translated.append(client.translate(line).strip('\r\n'))
+            translated = client.translate(line)
+            if translated is not None:
+                self.__translated.append(translated.strip('\r\n'))
 
     def write_text(self, file, encoding='utf-8', linesep=None, cmp_file=None, cmp_lang=None):
         translated = self.__translated
