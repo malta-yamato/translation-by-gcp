@@ -1,5 +1,5 @@
 
-##概要
+## 概要
 
 GCP(Google Cloud Platform) の Cloud Translation API を利用して翻訳を行います。
 コマンドで翻訳したいテキストファイルを指定すると、出力フォルダに翻訳結果が格納されます。
@@ -21,7 +21,7 @@ Python 3.6.5
 pip 10.0.1  
 google-cloud-translate 1.3.1
 
-##事前準備
+## 事前準備
 
 このスクリプトを使うにあたり、あらかじめ GCP のアカウントを作成し、Cloud Translation API を_有効_にしてください。
 また以下の URL を参考に、python上で Cloud Translation API を使用できるように設定してください。
@@ -29,7 +29,7 @@ google-cloud-translate 1.3.1
 https://cloud.google.com/translate/docs/reference/libraries#client-libraries-install-python
 
 
-##インストール方法
+## インストール方法
 
 virtualenv 等の仮想環境でインストールすることをおすすめいたします。
 
@@ -38,24 +38,24 @@ pip install git+https://github.com/malta-yamato/translation-by-gcp.git
 同時に google-cloud-translate もインストールされます。
 
 
-##コマンド
+## コマンド
 
-###通常のコマンド
+### 通常のコマンド
 translate 入力ファイル  
 例）translate sample.txt
 
-###翻訳先の指定（言語コード）
+### 翻訳先の指定（言語コード）
 --langs 言語コード１ 言語コード2 …  
 例）translate sample.txt --langs ja en
 
-###出力先フォルダの指定（省略可、デフォルトでは output-translation というフォルダが作成されて、そこに翻訳結果が格納される）
+### 出力先フォルダの指定（省略可、デフォルトでは output-translation というフォルダが作成されて、そこに翻訳結果が格納される）
 --output 出力先フォルダ  
 例）translate sample.txt --langs ja en --output hoge
 
-###翻訳チェック（翻訳した結果をさらに指定した言語で翻訳し直します。結果は出力先フォルダの check フォルダに格納されます）
+### 翻訳チェック（翻訳した結果をさらに指定した言語で翻訳し直します。結果は出力先フォルダの check フォルダに格納されます）
 --check 言語コード  
 例）translate sample.txt --langs en --check ja
 
-###Android用
+### Android用
 transand リソースフォルダ  
 例）transand values --lang en --check ja
