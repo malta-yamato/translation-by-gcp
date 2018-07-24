@@ -41,7 +41,7 @@ pip install git+https://github.com/malta-yamato/translation-by-gcp.git
 ## コマンド
 
 ### 通常のコマンド
-translate 入力ファイル  
+translate 入力ファイル（現在、文字コードは utf-8 のみに対応しています）
 例）translate sample.txt
 
 ### 翻訳先の指定（言語コード）
