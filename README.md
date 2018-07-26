@@ -60,7 +60,7 @@ e.g.) translate sample.txt --langs ja --check en
 
 ### Android
 transand resource folder  
-e.g.) transand values --lang en --check ja
+e.g.) transand values --langs en --check ja
 
 
 # 日本語
@@ -124,4 +124,4 @@ translate 入力ファイル（現在、文字コードは utf-8 のみに対応
 
 ### Android用
 transand リソースフォルダ  
-例）transand values --lang en --check ja
+例）transand values --langs en --check ja
